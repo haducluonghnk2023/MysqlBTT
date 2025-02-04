@@ -411,7 +411,18 @@ AND NOT EXISTS (
     WHERE sv.MaSV = kq.MaSV AND kq.Diem < 5
 );
 -- cau 58:
+SELECT dk.TenKhoa, COUNT(CASE WHEN sv.HocBong > 0 THEN sv.MaSV ELSE NULL END) AS SoLuongSinhVienNhanHocBong
+FROM dmkhoa dk
+LEFT JOIN dmsv sv ON dk.MaKhoa = sv.MaKhoa
+GROUP BY dk.TenKhoa
+ORDER BY SoLuongSinhVienNhanHocBong DESC;
 -- cau 59:
+SELECT sv.MaSV, sv.HoSV, sv.TenSV, COUNT(kq.MaMH) AS SoLuongMonHoc
+FROM dmsv sv
+JOIN ketqua kq ON sv.MaSV = kq.MaSV
+GROUP BY sv.MaSV, sv.HoSV, sv.TenSV
+ORDER BY SoLuongMonHoc DESC
+LIMIT 3;
 -- cau 60:
 SELECT mh.TenMH
 FROM dmmh mh
