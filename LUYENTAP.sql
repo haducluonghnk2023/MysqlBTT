@@ -393,6 +393,14 @@ where not exists (
     where kq.MaMH = mh.MaMH and sv.MaKhoa = 'AV'
 );
 -- cau 55:
+SELECT sv.MaSV, sv.HoSV, sv.TenSV
+FROM dmsv sv
+WHERE sv.MaKhoa = 'AV'
+AND sv.MaSV NOT IN (
+    SELECT DISTINCT kq.MaSV
+    FROM ketqua kq
+    WHERE kq.MaMH = (SELECT MaMH FROM dmmh WHERE TenMH = 'Văn Phạm')
+);
 -- cau 56:
 SELECT sv.MaSV, sv.HoSV,sv.TenSV
 FROM dmsv sv
